@@ -1,0 +1,6 @@
+﻿2022-02-25 23:24:13,260 FATAL [1] MIA.Login.Button_Click - Se ha presentado un error al realizar la validación de directorio activo a través de la API. The user name or password is incorrect.
+(LDAP://10.8.35.12/DC=bancolombia,DC=corp)
+2022-02-25 23:59:22,160 FATAL [1] MIA.Login.Button_Click - Se ha presentado un error al realizar la validación de directorio activo a través de la API.
+System.Net.WebException: No se puede resolver el nombre remoto: 'sbmdebpia01v.bancolombia.corp'
+   en MIA.Helpers.Authentication.ValidateLogin(String username, String password, String& error) en D:\ui-virtual-workforce\AdminFront\Helpers\Authentication.cs:línea 68
+   en MIA.Login.Button_Click(Object sender, RoutedEventArgs e) en D:\ui-virtual-workforce\AdminFront\Login.xaml.cs:línea 44

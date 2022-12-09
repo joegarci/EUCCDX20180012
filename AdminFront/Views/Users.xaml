@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="MIA.Views.Users"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="464" d:DesignWidth="666">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock  Grid.Row="0" 
+                    HorizontalAlignment="Center" 
+                    Style="{StaticResource Titulo}"
+                    Text="Gestión de Máquinas">
+        </TextBlock>
+        <Button Style="{StaticResource MaterialDesignRaisedLightButton}"
+                Width="150" 
+                Grid.Row="1" 
+                HorizontalAlignment="Left"
+                Command="{Binding NewCommand}"
+                Margin="40 10 0 10" 
+                Visibility="Visible"
+                Content="Nueva Máquina">
+        </Button>
+        <DataGrid Grid.Column="0" 
+                  Grid.Row="3" 
+                  IsReadOnly="True" 
+                  AutoGenerateColumns="False" 
+                  Margin="40 0 40 10"
+                  ItemsSource="{Binding ListUsers}"
+                  SelectedItem="{Binding CurrentUser}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nombre Usuario" Binding="{Binding NameUser}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Nombre de Máquina" Binding="{Binding ComputerNameUser}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Activa" Binding="{Binding ActiveUser}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" 
+                                        Command="{Binding Path=DataContext.EditCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Content="Editar">
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"  
+                                        Command="{Binding Path=DataContext.DeleteCommand, RelativeSource= {RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Visibility="Collapsed"
+                                        Content="Borrar">
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

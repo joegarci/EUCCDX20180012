@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="MIA.Views.AuditTickets"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="464" d:DesignWidth="666">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource Titulo}"
+                   Grid.Row="0" 
+                   Grid.ColumnSpan="6" 
+                   HorizontalAlignment="Center"
+                   Text="Auditoría del Proceso">
+        </TextBlock>
+        <DatePicker Name="dateInit" 
+                    SelectedDate="{Binding CurrentAudtitTicket.StartDate, Mode=TwoWay}"
+                    Grid.Row="2"
+                    Grid.Column="4" 
+                    HorizontalAlignment="Left" 
+                    Width="150" 
+                    Margin="30 -5 10 0" 
+                    materialDesign:HintAssist.Hint="Fecha Inicio" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                    Language="es-CO"/>
+        <DatePicker Name="dateFinish" 
+                    SelectedDate="{Binding CurrentAudtitTicket.EndDate, Mode=TwoWay}"
+                    HorizontalAlignment="Left" 
+                    Width="150" 
+                    Grid.Row="2" 
+                    Grid.Column="5" 
+                    Margin="0 -5 10 0" 
+                    materialDesign:HintAssist.Hint="Fecha Final" 
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                    Language="es-CO"/>
+        <Button Content="{materialDesign:PackIcon filter}"  
+                Command="{Binding CommandSearch}"
+                ToolTip="Buscar por ticket o estados" 
+                Grid.Row="2" 
+                Grid.Column="3" 
+                HorizontalAlignment="Left" 
+                Margin="0 15 10 10" 
+                Name="searchAudit"></Button>
+        <Button Content="{materialDesign:PackIcon FileDownload}" 
+                Command="{Binding CommandDownload}"
+                ToolTip="Descargar Reporte" 
+                Name="downloadReport" 
+                Grid.Row="2" 
+                Grid.Column="6" 
+                HorizontalAlignment="Left" 
+                Margin="170 13 0 10"/>
+        <DataGrid x:Name="gridAudit" 
+                  ItemsSource="{Binding ListAudtitTicket}"
+                  Grid.Column="0" 
+                  Grid.Row="4" 
+                  Grid.ColumnSpan="6" 
+                  IsReadOnly="True"
+                  Margin="40 0 40 0" 
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ticket" Binding="{Binding IdTicket}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Nombre de Usuario" Binding="{Binding NameUser}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha Inicial" Binding="{Binding StartDate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Fecha Final" Binding="{Binding EndDate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Estado Inicial" Binding="{Binding StartState}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Estado Final" Binding="{Binding EndState}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Descripción" Binding="{Binding Description}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox  Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                  Name="txtFilter" 
+                  Text="{Binding CurrentAudtitTicket.IdTicket, Mode=TwoWay}"
+                  Grid.Column="0" 
+                  Grid.Row="2" 
+                  Margin="40,5,0,10" 
+                  materialDesign:HintAssist.Hint="Filtrar Por Ticket"/>
+        <ComboBox Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  materialDesign:HintAssist.Hint="Filtrar Por Estados" 
+                  ItemsSource ="{Binding ListState, Mode=TwoWay}"
+                  Name="cbSate" 
+                  Grid.Column="1" 
+                  HorizontalAlignment="Left" 
+                  Margin="40 0 40 5" 
+                  Grid.Row="2" 
+                  IsReadOnly="True"
+                  IsEditable="True" 
+                  Focusable="False"     
+                  Height="Auto">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox Name="chkState" 
+                              Width="200" 
+                              Content="{Binding NameState}" 
+                              IsChecked="{Binding IsSelect}" 
+                              Tag="{Binding IdState}">
+                    </CheckBox>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox x:Name="cbAssitent" 
+                  Grid.Row="1" 
+                  Grid.Column="0" 
+                  Grid.ColumnSpan="6" 
+                  Margin="40 10 40 10"
+                  materialDesign:HintAssist.Hint="Seleccione el RPA para ver la información"
+                  ItemsSource="{Binding ListAssistants}" 
+                  DisplayMemberPath="NameAssistant"
+                  SelectedValuePath="IdAssistant" 
+                  IsEditable="True" 
+                  IsReadOnly="True"
+                  Focusable="False"
+                  SelectedValue="{Binding CurrentAssistant.IdAssistant}"/>
+    </Grid>
+</UserControl>
